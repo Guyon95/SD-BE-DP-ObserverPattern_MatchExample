@@ -27,8 +27,8 @@ Om te oefenen met de Observer Pattern gaan we deze code aanpassen. Fork deze rep
 ### Feeling krijgen
 Probeer de volgende dingen om feeling met de code te krijgen:
 
- * Voeg een extra MatchEventType toe en hoe de supporters op deze reageren.
- * Voeg een neutrale toeschouwer toe en zorg dat deze anders reageert dan de overige supporters.
+ * Voeg een extra MatchEventType toe en hoe de supporters op deze reageren. DONE!
+ * Voeg een neutrale toeschouwer toe en zorg dat deze anders reageert dan de overige supporters. DONE!
 
 ### Helemaal los gaan
 

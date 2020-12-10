@@ -14,6 +14,7 @@ public interface Subject {
      */
     void attach(Observer o);
 
+
     /**
      * Removes the observer from the collection.
      * @param o observer to be removed.
