@@ -1,23 +1,16 @@
 package nl.novi.dpcc.observerpattern.observer;
 
-import lombok.Getter;
-import lombok.Setter;
 import nl.novi.dpcc.observerpattern.domain.MatchEventType;
 import nl.novi.dpcc.observerpattern.domain.Message;
-import nl.novi.dpcc.observerpattern.model.score;
-import nl.novi.dpcc.observerpattern.subject.MatchSubject;
-import nl.novi.dpcc.observerpattern.subject.Subject;
+import nl.novi.dpcc.observerpattern.model.Score;
+
 
 
 public class ScoreboardObserver implements Observer {
 
-    private final Subject matchSubject;
+    private final Score score;
 
-    private final score score;
-
-
-    public ScoreboardObserver(Subject matchSubject, nl.novi.dpcc.observerpattern.model.score score) {
-        this.matchSubject = matchSubject;
+    public ScoreboardObserver(Score score) {
         this.score = score;
     }
 
@@ -25,28 +18,16 @@ public class ScoreboardObserver implements Observer {
         String clubname = message.getClubName();
         MatchEventType eventType = message.getMatchEventType();
 
-        if (message.getClubName().equalsIgnoreCase(score.getHomeTeam())) {
+        if (clubname.equalsIgnoreCase(score.getTeam())) {
             if (eventType == MatchEventType.GOAL) {
-                score.setScore_home(score.getScore_home() + 1);
+                score.setScore(score.getScore() + 1);
 
             } else if (eventType == MatchEventType.YELLOW_CARD) {
-                score.setYellow_home(score.getYellow_home() + 1);
+                score.setYellow(score.getYellow() + 1);
 
             } else if (eventType == MatchEventType.RED_CARD) {
-                score.setRed_home(score.getRed_home() + 1);
-            }
-        } else {
-            if (eventType == MatchEventType.GOAL) {
-                score.setScore_away(score.getScore_away() + 1);
-
-            } else if (eventType == MatchEventType.YELLOW_CARD) {
-                score.setYellow_away(score.getYellow_away() + 1);
-
-            } else if (eventType == MatchEventType.RED_CARD) {
-                score.setRed_away(score.getRed_away() + 1);
+                score.setRed(score.getRed() + 1);
             }
         }
-
-        //StringBuilder sb = new StringBuilder("The ").append(favouriteClub).append("-crowd ");
     }
 }

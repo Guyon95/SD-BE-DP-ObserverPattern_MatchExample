@@ -2,7 +2,7 @@ package nl.novi.dpcc.observerpattern;
 
 import nl.novi.dpcc.observerpattern.domain.MatchEventType;
 import nl.novi.dpcc.observerpattern.domain.Message;
-import nl.novi.dpcc.observerpattern.model.score;
+import nl.novi.dpcc.observerpattern.model.Score;
 import nl.novi.dpcc.observerpattern.observer.Observer;
 import nl.novi.dpcc.observerpattern.observer.ScoreboardObserver;
 import nl.novi.dpcc.observerpattern.observer.SupporterObserver;
@@ -19,31 +19,36 @@ public class Main {
         Observer ajaxSupporter = new SupporterObserver("Ajax");
         Observer feyenoordSupporter = new SupporterObserver("Feyenoord");
         Observer neutralSupporter = new SupporterObserver("Neutral");
-        score score = new score();
+        Score feyenoord = new Score("Feyenoord");
+        Score ajax = new Score("Ajax");
 
         Subject match = new MatchSubject();
 
-        Observer scoreboard = new ScoreboardObserver(match, score);
+        Observer scoreboardFeyenoord = new ScoreboardObserver(feyenoord);
+        Observer scoreboardAjax = new ScoreboardObserver(ajax);
 
         match.attach(ajaxSupporter);
         match.attach(feyenoordSupporter);
         match.attach(neutralSupporter);
 
 
-        score.setHomeTeam("Ajax");
-        score.setAwayTeam("Feyenoord");
-
         for(int i = 0; i <= 90; i = i + 5) {
-            Message bericht = pickRandomMessage();
-            match.notifyUpdate(bericht);
-            scoreboard.update(bericht);
+            System.out.println("Minute : " + i + "'");
+            Message message = pickRandomMessage();
+            match.notifyUpdate(message);
+            if (message.getClubName().equalsIgnoreCase(feyenoord.getTeam())){
+                scoreboardFeyenoord.update(message);
+            }
+            else{
+                scoreboardAjax.update(message);
+            }
 
-            Thread.sleep(1000);
+            Thread.sleep(500);
         }
-        System.out.println(score.getHomeTeam() + " - " + score.getAwayTeam());
-        System.out.println("Goals " + score.getScore_home() + " - " + score.getScore_away());
-        System.out.println("Red " + score.getRed_home() + " - " + score.getRed_away());
-        System.out.println("Yellow " + score.getYellow_home() + " - " + score.getYellow_away());
+        System.out.println(feyenoord.getTeam() + " - " + ajax.getTeam());
+        System.out.println("Goals " + feyenoord.getScore() + " - " + ajax.getScore());
+        System.out.println("Red " + feyenoord.getRed() + " - " + ajax.getRed());
+        System.out.println("Yellow " + feyenoord.getYellow() + " - " + ajax.getYellow());
     }
 
     private static Message pickRandomMessage() {
